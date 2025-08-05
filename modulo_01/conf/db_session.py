@@ -19,6 +19,7 @@ def create_engine(sqlite: bool = False):
     if __engine:
         return
     
+    # Utilizando o sqlite
     if sqlite: 
         arquivo_db = 'db/picoles.sqlite'
         folder = Path(arquivo_db).parent
@@ -26,4 +27,8 @@ def create_engine(sqlite: bool = False):
 
         conn_str = f'sqlite:///{arquivo_db}'
         __engine = sa.create_engine(url=conn_str, echo=False, connect_args={"check_same_thread": False})
+    else:
+        conn_str = f'postgressql://postgres:D%40vi0406@localhost:5432/picoles'
+        __engine = sa.create_engine(url=conn_str, echo=False)
     
+    return __engine
