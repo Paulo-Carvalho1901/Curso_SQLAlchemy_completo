@@ -50,3 +50,14 @@ def create_session() -> Session:
     session: Session = __session()
 
     return __session
+
+def create_table() -> None:
+    global __engine
+
+    if not __engine:
+        create_engine() # create_engine(sqlite=True)
+
+    import models.__all_models
+    ModelBase.metadata.drop_all(__engine)
+    ModelBase.metadata.create_all(__engine)
+    
